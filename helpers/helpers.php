@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Function to generate random string.
  */
-function randomString($n) {
+function randomString($n)
+{
 
 	$generated_string = "";
 
@@ -26,7 +28,8 @@ function randomString($n) {
 /**
  *
  */
-function getSecureRandomToken() {
+function getSecureRandomToken()
+{
 	$token = bin2hex(openssl_random_pseudo_bytes(16));
 	return $token;
 }
@@ -34,24 +37,27 @@ function getSecureRandomToken() {
 /**
  * Clear Auth Cookie
  */
-function clearAuthCookie() {
-
+function clearAuthCookie()
+{
 	unset($_COOKIE['series_id']);
 	unset($_COOKIE['remember_token']);
-	setcookie('series_id', null, -1, '/');
-	setcookie('remember_token', null, -1, '/');
+	setcookie('series_id', '', time() - 3600, '/'); // Set to empty string and past time to delete
+	setcookie('remember_token', '', time() - 3600, '/'); // Same as above
 }
+
 /**
  *
  */
-function clean_input($data) {
+function clean_input($data)
+{
 	$data = trim($data);
 	$data = stripslashes($data);
 	$data = htmlspecialchars($data);
 	return $data;
 }
 
-function paginationLinks($current_page, $total_pages, $base_url) {
+function paginationLinks($current_page, $total_pages, $base_url)
+{
 
 	if ($total_pages <= 1) {
 		return false;
@@ -97,9 +103,7 @@ function paginationLinks($current_page, $total_pages, $base_url) {
 		if ($i == $current_page + 4 && $i < $total_pages) {
 
 			$html = $html . '<li class="disabled"><a>...</a></li>';
-
 		}
-
 	}
 
 	if ($current_page == $total_pages) {
@@ -117,7 +121,7 @@ function paginationLinks($current_page, $total_pages, $base_url) {
 /**
  * to prevent xss
  */
-function xss_clean($string){
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
-
+function xss_clean($string)
+{
+	return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
